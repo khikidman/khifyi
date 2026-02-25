@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+body {
+  font-family: "Fira Code", monospace;
+  @apply bg-zinc-950 text-zinc-100;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes gradient-spin {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.animate-gradient-border {
+  background-size: 200% 200%;
+  animation: gradient-spin 6s linear infinite;
+}
+
+.prose h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.prose p {
+  color: #d4d4d8;
+  line-height: 1.75;
+}
+
+.prose code {
+  background: #18181b;
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+.prose pre {
+  background: #0f172a;
+  padding: 1rem;
+  border-radius: 12px;
+  overflow-x: auto;
+}
