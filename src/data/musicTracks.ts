@@ -11,7 +11,7 @@ export const musicTracks = [
     title: "Afloat",
     description: "Ambient / Experimental",
     cover:
-      "/images/afloat-cover.jpg", // put your image in public folder
+      "../assets/afloat-cover.jpg", // put your image in public folder
     soundcloudTrackId: "2259822590"
   }
 ];

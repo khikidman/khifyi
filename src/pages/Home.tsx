@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 const Home = () => {
   return (
     <Layout>
-      <h1>Hi, I'm Maxwell 👋</h1>
+      <h1>Hi, I'm Khi 👋</h1>
       <h1 className="text-4xl font-bold text-red-500">Test</h1>
       <p>
         Computer Science student building software, games, and tools that

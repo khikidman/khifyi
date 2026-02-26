@@ -33,7 +33,7 @@ const Music = () => {
         </section>
 
         {/* Now Listening */}
-        <section className="mb-20">
+        {/* <section className="mb-20">
           <h2 className="text-2xl font-semibold mb-8">
             Currently Enjoying
           </h2>
@@ -65,10 +65,10 @@ const Music = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Mood Section */}
-        <section className="mb-20">
+        {/* <section className="mb-20">
           <h2 className="text-2xl font-semibold mb-8">
             Musical Taste
           </h2>
@@ -97,7 +97,7 @@ const Music = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
       </div>
     </Layout>
