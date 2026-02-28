@@ -26,11 +26,11 @@ const Portfolio = () => {
 
       {projects.map((project, index) => (
         <div key={index} style={{ marginBottom: "2rem" }}>
-          <h2>{project.title}</h2>
+          {/* <h2>{project.title}</h2>
           <p>{project.description}</p>
           <p>
             <strong>Tech:</strong> {project.tech.join(", ")}
-          </p>
+          </p> */}
         </div>
       ))}
     </Layout>
