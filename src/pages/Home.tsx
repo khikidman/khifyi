@@ -42,6 +42,7 @@ const Home = () => {
               text-black
               font-semibold
               rounded-full
+              hover:shadow-[0_0_0px_rgba(59,246,130,0.0)]
               hover:bg-green-300
               transition
             "
