@@ -10,7 +10,7 @@ const Home = () => {
         <div className="relative min-h-[70vh] flex flex-col justify-center mt-10 mr-0 pr-40">
           {/* ===== Background Headshot ===== */}
           <img
-            src="../../public/images/headshot.png"
+            src="/images/headshot.png"
             alt="Khi Kidman"
             className="
               absolute
