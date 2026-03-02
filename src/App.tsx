@@ -1,23 +1,33 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";import Home from './pages/Home.tsx';
-import Portfolio from './pages/Portfolio.tsx';
-import Music from './pages/Music.tsx';
-import Blog from './pages/Blog.tsx';
-import BlogPost from "./blog/BlogPost.tsx";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
-function App() {
+import Home from "./pages/Home";
+import Portfolio from "./pages/Portfolio";
+import Music from "./pages/Music";
+import Blog from "./pages/Blog";
+import BlogPost from "./blog/BlogPost";
+
+function AppRoutes() {
+  const location = useLocation();
 
   return (
-    <Router>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/music" element={<Music />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
-    </Router>
+    </AnimatePresence>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppRoutes />
+    </Router>
+  );
+}

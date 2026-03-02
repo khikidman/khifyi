@@ -22,19 +22,19 @@ const Blog = () => {
   <h1 className="text-5xl font-bold tracking-tight flex items-center gap-2">
     
     {/* Opening Bracket */}
-    <span className="bg-gradient-to-r from-blue-300 via-blue-300/90 to-blue-300/80 bg-clip-text text-transparent">
+    <span className="bg-linear-to-r from-blue-300 via-blue-300/90 to-blue-300/80 bg-clip-text text-transparent">
       &lt;
     </span>
 
     <span>Blog</span>
 
     {/* Closing Bracket */}
-    <span className="bg-gradient-to-r from-blue-300/80 via-blue-300/70 to-blue-300/60 bg-clip-text text-transparent">
+    <span className="bg-linear-to-r from-blue-300/80 via-blue-300/70 to-blue-300/60 bg-clip-text text-transparent">
       /&gt;
     </span>
 
   </h1>
-  <div className="mt-4 h-[3px] w-180 bg-gradient-to-r from-blue-300/80 to-transparent" />
+  <div className="mt-4 h-0.75 w-75 bg-linear-to-r from-blue-300/80 to-transparent" />
 
   {/* <p className="text-zinc-500 mt-3 text-sm">
     Thoughts on code, systems, and design.
@@ -83,77 +83,128 @@ const Blog = () => {
   })}
 </div>
 
-      <div className="space-y-8">
-        {filteredPosts.map((post) => {
-            const isRead = hasReadPost(post.slug);
-  return (
-  <article
-  key={post.slug}
-  className="relative p-[1.5px] rounded-xl overflow-hidden group"
+      <div className="flex flex-col gap-8 w-full">
+
+  {filteredPosts.map((post) => {
+
+    const isRead = hasReadPost(post.slug);
+
+    return (
+      <Link
+  to={`/blog/${post.slug}`}
+  onClick={() => markPostAsRead(post.slug)}
+  className="block"
 >
-  {/* Gradient Border — Only for unread posts */}
-  {!isRead && (
-    <div
-      className="
-        absolute inset-0
-        rounded-xl
-        bg-gradient-to-r
-        from-transparent
-        via-blue-300
-        to-transparent
-        animate-gradient-border
-        opacity-80
-      "
-    />
-  )}
+      <article
+  key={post.slug}
+  className="
+    group
+    relative
 
-  {/* Subtle Glow */}
-  {!isRead && (
-    <div
-      className="
-        absolute inset-0
-        rounded-xl
-        bg-blue-500/10
-        blur-xl
-        opacity-30
-        group-hover:opacity-50
-        transition duration-200
-      "
-    />
-  )}
+    p-[2px]
+    rounded-2xl
 
-  {/* Card Content */}
-  <div
-    className={`
-      relative z-10 p-6 rounded-xl
-      bg-zinc-950
-      border
-      transition duration-500
+    transition-all duration-500 ease-out
 
-      ${
-        isRead
-          ? "border-zinc-800"
-          : "border-blue-400/60 group-hover:border-blue-400"
-      }
-    `}
-    onClick={() => markPostAsRead(post.slug)}
-  >
-    <Link to={`/blog/${post.slug}`}>
-      <h2 className="text-2xl font-semibold group-hover:text-blue-400 transition">
-        {post.title}
-      </h2>
-    </Link>
+    hover:-translate-y-1
+    hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]
+  "
+>
 
-    <p className="text-sm text-zinc-500 mt-2">
-      {post.date} • {post.readingTime} min read
-    </p>
+        {/* Unread Animated Border */}
+        {!isRead && (
+          <div
+            className="
+              absolute inset-0
+              rounded-2xl
+              bg-linear-to-r
+              from-transparent
+              via-blue-300
+              to-transparent
+              animate-gradient-border
+              opacity-70
+            "
+          />
+        )}
 
-    <p className="mt-4 text-zinc-300">{post.summary}</p>
-  </div>
-</article>
-  )
-})}
-      </div>
+        {/* Glow Layer */}
+        {!isRead && (
+          <div
+            className="
+              absolute inset-0
+              rounded-2xl
+              bg-blue-500/10
+              blur-xl
+              opacity-0
+              group-hover:opacity-40
+            "
+          />
+        )}
+
+        {/* Card Content */}
+        <div
+          className={`
+            relative z-10
+
+            flex flex-col
+            justify-between
+
+            p-6
+
+            rounded-2xl
+            backdrop-blur-xl
+
+            transition-all duration-500 ease-out
+
+            bg-gradient-to-b
+            from-zinc-900/90
+            to-zinc-950
+
+            border-2
+
+            ${
+              isRead
+                ? "border-zinc-800 text-white/90"
+                : "border-blue-400/50"
+            }
+
+            hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]
+            hover:border-blue-300/80
+          `}
+          onClick={() => markPostAsRead(post.slug)}
+        >
+
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+            {/* Left Content */}
+            <div className="flex-1">
+              <h2 className="
+                text-2xl font-semibold
+                tracking-tight
+                group-hover:text-blue-300
+                transition
+              ">
+                {post.title}
+              </h2>
+
+              <p className="text-sm text-zinc-500 mt-2">
+                {post.date} • {post.readingTime} min read
+              </p>
+
+              <p className="mt-4 text-zinc-300 leading-relaxed max-w-xl">
+                {post.summary}
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </article>
+      </Link>
+    );
+  })}
+
+</div>
       <PostScroller posts={filteredPosts} />
     </Layout>
   );
