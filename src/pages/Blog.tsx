@@ -49,7 +49,7 @@ const Blog = () => {
       px-4 py-2 rounded-full text-sm
       transition-all duration-300
       border border-zinc-700
-      hover:border-blue-500
+      hover:border-blue-300
       hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]
       ${activeTag === null
         ? "bg-blue-300 shadow-[0_0_25px_rgba(59,130,246,0.6)] font-bold"
@@ -70,7 +70,7 @@ const Blog = () => {
           px-4 py-2 rounded-full text-sm
           border border-zinc-800
           transition-all duration-300
-          hover:border-blue-500
+          hover:border-blue-300
           hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]
           ${isActive
             ? "bg-blue-300 shadow-[0_0_25px_rgba(59,130,246,0.3)] scale-105 font-semibold text-black"
@@ -101,7 +101,7 @@ const Blog = () => {
     group
     relative
 
-    p-[2px]
+    p-0.5
     rounded-2xl
 
     transition-all duration-500 ease-out
@@ -156,7 +156,7 @@ const Blog = () => {
 
             transition-all duration-500 ease-out
 
-            bg-gradient-to-b
+            bg-linear-to-b
             from-zinc-900/90
             to-zinc-950
 

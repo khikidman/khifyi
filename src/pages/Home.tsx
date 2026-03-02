@@ -7,7 +7,28 @@ const Home = () => {
   return (
     <Layout>
       <PageContentTransition>
-        <div className="min-h-[70vh] flex flex-col justify-center">
+        <div className="relative min-h-[70vh] flex flex-col justify-center mt-10 mr-0 pr-40">
+          {/* ===== Background Headshot ===== */}
+          <img
+            src="../../public/images/headshot.png"
+            alt="Khi Kidman"
+            className="
+              absolute
+              -right-87.5
+              top-10/25
+              -translate-y-1/2
+              w-155
+              opacity-0
+              headshot-animate
+              grayscale
+              contrast-110
+              brightness-90
+              pointer-events-none
+              select-none
+              hidden md:block
+              mask-radial
+            "
+          />
 
           {/* ===== Name Header ===== */}
           <div className="mb-8">
@@ -23,11 +44,11 @@ const Home = () => {
               </span>
             </h1>
 
-            <div className="mt-4 h-0.75 w-180 bg-linear-to-r from-blue-300/80 to-transparent" />
+            <div className="mt-4 h-0.75 w-150 bg-linear-to-r from-blue-300/80 to-transparent" />
           </div>
 
           {/* ===== Summary ===== */}
-          <p className="text-zinc-400 text-lg max-w-2xl leading-relaxed mb-10">
+          <p className="text-zinc-400 text-lg max-w2xl leading-relaxed mb-10">
             Embedded-focused computer engineer building systems across firmware,
             hardware, and software. I design reliable, performance-driven
             solutions that bridge microcontrollers and scalable applications.
@@ -52,6 +73,25 @@ const Home = () => {
               "
             >
               Contact Me
+            </a>
+
+            {/* Resume */}
+            <a
+              href="mailto:your@email.com"
+              className="
+                px-6 py-3
+                bg-transparent
+                shadow-[0_0_13px_rgba(59,130,246,0.3)]
+                text-zinc-300
+                font-semibold
+                rounded-full
+                border-2 border-blue-300/60
+                hover:shadow-[0_0_0px_rgba(59,130,246,0.0)]
+                hover:bg-blue-300
+                transition-all duration-300
+              "
+            >
+              Resume
             </a>
 
             {/* Social Icons */}
