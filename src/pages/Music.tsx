@@ -1,105 +1,78 @@
 import Layout from "../components/Layout";
+import PageContentTransition from "../components/PageContentTransition";
 import { musicTracks } from "../data/musicTracks";
 import MusicTrackCard from "../components/MusicTrackCard";
 
 const Music = () => {
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto px-6">
+      <PageContentTransition>
+        <div className="relative max-w-5xl mx-auto px-0 pt-0">
 
-        {/* Hero */}
-        <section className="mb-20">
-            <h1 className="text-6xl font-bold mb-6">
-                Music Production
+          {/* ===== Ambient Background Glow ===== */}
+          <div className="
+            absolute -top-32 left-1/2 -translate-x-1/2
+            w-[800px] h-[400px]
+            bg-blue-500/10
+            blur-3xl
+            pointer-events-none
+          "/>
+
+          {/* ===== Hero Section ===== */}
+          <section className="mb-24 relative z-10">
+
+            <h1 className="text-5xl md:text-5xl font-bold tracking-tight">
+              <span className="bg-linear-to-r from-blue-300 via-blue-300/90 to-blue-300/70 bg-clip-text text-transparent">
+                &lt;
+              </span>
+
+              Music
+
+              <span className="bg-linear-to-r from-blue-300/80 via-blue-300/70 to-blue-300/60 bg-clip-text text-transparent">
+                /&gt;
+              </span>
             </h1>
 
-            <p className="text-zinc-400 max-w-2xl text-lg leading-relaxed">
-                I produce instrumental and experimental music using guitar,
-                digital synthesis, and sound design experimentation.
-                These are selected works hosted on SoundCloud.
+            <div className="mt-4 h-0.75 w-100 bg-linear-to-r from-blue-300/80 to-transparent mb-8" />
+
+            <p className="text-zinc-400 text-lg max-w-2xl leading-relaxed">
+              I produce instrumental and experimental music using guitar,
+              digital synthesis, and sound design experimentation.
+              These are selected works hosted on SoundCloud.
             </p>
-        </section>
+          </section>
 
-        <section className="flex flex-col gap-8 max-w-2xl mx-auto">
-            {musicTracks.map(track => (
-                <MusicTrackCard
-                key={track.id}
-                title={track.title}
-                description={track.description}
-                cover={track.cover}
-                trackId={track.soundcloudTrackId}
-                />
-            ))}
-        </section>
-
-        {/* Now Listening */}
-        {/* <section className="mb-20">
-          <h2 className="text-2xl font-semibold mb-8">
-            Currently Enjoying
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="
-                  group
-                  bg-zinc-900/40
-                  rounded-xl
-                  overflow-hidden
-                  border border-zinc-800
-                  hover:border-blue-500
-                  transition-all duration-300
-                "
-              >
-                <div className="aspect-square bg-zinc-800" />
-
-                <div className="p-4">
-                  <h3 className="font-medium group-hover:text-blue-400 transition">
-                    Artist Name
-                  </h3>
-                  <p className="text-sm text-zinc-500">
-                    Album / Track
-                  </p>
+          {/* ===== Tracks Section ===== */}
+          <section className="relative z-10">
+            <div className="flex flex-col gap-10 max-w-2xl mx-auto">
+              {musicTracks.map((track, i) => (
+                <div
+                  key={track.id}
+                  className="animate-fade-in-up"
+                  style={{ animationDelay: `${i * 0.15}s` }}
+                >
+                  <MusicTrackCard
+                    title={track.title}
+                    description={track.description}
+                    cover={track.cover}
+                    trackId={track.soundcloudTrackId}
+                  />
                 </div>
-              </div>
-            ))}
-          </div>
-        </section> */}
+              ))}
+            </div>
+          </section>
 
-        {/* Mood Section */}
-        {/* <section className="mb-20">
-          <h2 className="text-2xl font-semibold mb-8">
-            Musical Taste
-          </h2>
+          {/* ===== Bottom Glow Accent ===== */}
+          <div className="
+            absolute bottom-0 left-1/2 -translate-x-1/2
+            w-[700px] h-[300px]
+            bg-blue-500/5
+            blur-3xl
+            pointer-events-none
+          "/>
 
-          <div className="flex flex-wrap gap-3">
-            {[
-              "Electronic",
-              "Ambient",
-              "Indie",
-              "Instrumental",
-              "Soundtrack",
-              "Experimental"
-            ].map(style => (
-              <div
-                key={style}
-                className="
-                  px-5 py-2
-                  rounded-full
-                  bg-zinc-900/40
-                  border border-zinc-800
-                  hover:border-blue-500
-                  transition
-                "
-              >
-                {style}
-              </div>
-            ))}
-          </div>
-        </section> */}
-
-      </div>
+        </div>
+      </PageContentTransition>
     </Layout>
   );
 };

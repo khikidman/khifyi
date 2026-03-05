@@ -1,32 +1,77 @@
 import Layout from "../components/Layout";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+// import { AnimatePresence, motion } from "framer-motion";
+import PortfolioModal from "../components/PortfolioModal";
 
-const systems = [
-  {
-    title: "Embedded Control",
-    description:
-      "Real-time firmware development using microcontrollers with direct hardware interaction, interrupts, and peripheral communication.",
-    tech: ["Tiva C", "C", "UART", "SPI", "I2C"]
-  },
-  {
-    title: "Hardware Systems",
-    description:
-      "Circuit-level integration, debugging with oscilloscopes, signal validation, and hardware-aware system design.",
-    tech: ["Circuit Design", "Signal Debugging", "Datasheets"]
-  },
-  {
-    title: "Edge & Linux Systems",
-    description:
-      "Raspberry Pi-based edge devices running Linux for data acquisition, processing, and device communication.",
-    tech: ["Raspberry Pi Zero 2 W", "Linux", "Python"]
-  },
-  {
-    title: "Full-Stack Integration",
-    description:
-      "Web dashboards and APIs built to interface with embedded systems for monitoring and control.",
-    tech: ["React", "Node", "TypeScript", "REST APIs"]
-  }
+// const oldsystems = [
+//   {
+//     title: "Autonomous Unmanned Aerial System",
+//     context: "CSU California Unmanned Aerial System Competition • UIC Team Air",
+//     description:
+//       "Designed and integrated an autonomous sUAS featuring embedded control systems, sensor fusion, computer vision, and precision payload mechanisms, enabling waypoint navigation, target localization, package delivery, and recovery under safety-critical flight constraints.",
+//     tech: ["Control Systems", "RF Systems", "MAVLink Protocol", "Ardupilot/PX4", "Real-time Telemetry", "Python", "PID Controllers"]
+//   },
+//   {
+//     title: "Handwired Split Keyboard",
+//     context: "Independent Research & Experimentation",
+//     description:
+//       "Building a personal split keyboard from scratch. 3D modeled and printed body with a soldered keyswitch matrix and a microcontroller for each half with auxilliary communication between them.",
+//     tech: ["Circuit Design", "Signal Debugging", "Datasheets"]
+//   },
+//   {
+//     title: "Edge & Linux Systems",
+//     context: "Personal / Raspberry Pi Deployment",
+//     description:
+//       "Raspberry Pi-based edge devices running Linux for data acquisition, processing, and device communication.",
+//     tech: ["Raspberry Pi Zero 2 W", "Linux", "Python"]
+//   },
+//   {
+//     title: "Full-Stack Integration",
+//     context: "Systems Integration Projects",
+//     description:
+//       "Web dashboards and APIs built to interface with embedded systems for monitoring and control.",
+//     tech: ["React", "Node", "TypeScript", "REST APIs"]
+//   }
+// ];
+
+interface PortfolioSystem {
+  title: string;
+  context: string;
+  description?: string;
+  overview?: string;
+  architecture?: string;
+  contributions?: string;
+  challenges?: string;
+  tech: string[];
+}
+
+const systems: PortfolioSystem[] = [
+{
+  title: "Autonomous Unmanned Aerial System",
+  context: "CSU California Unmanned Aerial System Competition • UIC Team Air",
+
+  overview:
+    "Designed and integrated an autonomous sUAS featuring embedded control systems, sensor fusion, computer vision, and precision payload mechanisms.",
+
+  architecture:
+    "The system was built around a Pixhawk flight controller running Ardupilot. A companion computer handled computer vision and mission logic while communicating with the autopilot via MAVLink over serial telemetry.",
+
+  contributions:
+    "Developed ground telemetry tooling, assisted with RF link integration, and worked on autonomous mission logic including waypoint navigation and target localization.",
+
+  challenges:
+    "Operating under competition safety constraints required reliable fail-safes, telemetry monitoring, and careful tuning of autonomous mission parameters.",
+
+  tech: [
+    "Control Systems",
+    "RF Systems",
+    "MAVLink",
+    "Ardupilot/PX4",
+    "Telemetry",
+    "Python",
+    "PID Controllers"
+  ]
+}
 ];
 
 const Portfolio = () => {
@@ -109,9 +154,15 @@ const Portfolio = () => {
             <div className="relative z-10 h-full flex flex-col justify-between">
 
               <div>
-                <h2 className="text-2xl font-semibold mb-6 text-white">
-                  {system.title}
-                </h2>
+                <div className="mb-4">
+                  <div className="text-xs tracking-widest uppercase text-blue-300/70 mb-2">
+                    {system.context}
+                  </div>
+
+                  <h2 className="text-2xl font-semibold text-white">
+                    {system.title}
+                  </h2>
+                </div>
 
                 <p className="text-sm text-zinc-400 leading-relaxed">
                   {system.description}
@@ -143,142 +194,10 @@ const Portfolio = () => {
       </div>
 
       {/* Modal */}
-      {selectedSystem && (
-        <>
-          <div
-            className="
-              fixed inset-0
-              bg-black/70
-              backdrop-blur-md
-              z-40
-            "
-            onClick={() => setSelectedSystem(null)}
-          />
-
-          <AnimatePresence>
-{selectedSystem && (
-  <>
-    {/* Background Dim */}
-    <motion.div
-      className="
-        fixed inset-0
-        bg-black/70
-        backdrop-blur-sm
-        z-40
-      "
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={() => setSelectedSystem(null)}
-    />
-
-    {/* Modal */}
-    <motion.div
-  className="
-    fixed
-    top-1/2 left-1/2
-    -translate-x-1/2 -translate-y-1/2
-
-    w-[92%]
-    max-w-3xl
-    max-h-[85vh]
-
-    z-50
-
-    rounded-2xl
-    p-10
-
-    bg-linear-to-b
-    from-zinc-900
-    to-zinc-950
-
-    border border-zinc-800
-
-    overflow-y-auto
-
-    will-change-transform
-  "
-
-  initial={{
-    opacity: 0,
-    scale: 0.97
-  }}
-
-  animate={{
-    opacity: 1,
-    scale: 1
-  }}
-
-  exit={{
-    opacity: 0,
-    scale: 0.97
-  }}
-
-  transition={{
-    duration: 0.28,
-    ease: [0.22, 1, 0.36, 1] // Apple-like easing
-  }}
->
-
-      <button
-  onClick={() => setSelectedSystem(null)}
-  className="
-    absolute top-6 right-6
-
-    w-12 h-12
-    flex items-center justify-center
-
-    text-zinc-400
-    text-2xl font-light
-
-    rounded-full
-
-    hover:bg-white/10
-    hover:text-white
-    hover:scale-110
-
-    transition-all duration-300
-
-    cursor-pointer
-  "
->
-  ✕
-</button>
-
-      <h2 className="text-3xl font-semibold mb-6 text-white">
-        {selectedSystem.title}
-      </h2>
-
-      <p className="text-zinc-400 leading-relaxed mb-8">
-        {selectedSystem.description}
-      </p>
-
-      <h3 className="text-lg font-semibold mb-4 text-white">
-        Technologies
-      </h3>
-
-      <div className="flex flex-wrap gap-2">
-        {selectedSystem.tech.map((tech: string) => (
-          <span
-            key={tech}
-            className="
-              px-3 py-1 text-sm rounded-full
-              border border-blue-300/30
-              bg-blue-400/10
-              text-blue-200
-            "
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-
-    </motion.div>
-  </>
-)}
-</AnimatePresence>
-        </>
-      )}
+      <PortfolioModal
+        system={selectedSystem}
+        onClose={() => setSelectedSystem(null)}
+      />
 
     </Layout>
   );

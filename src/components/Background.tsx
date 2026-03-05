@@ -7,28 +7,28 @@ export default function Background() {
         className="
           absolute inset-0
           opacity-40
-          bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12)_1px,transparent_2px)]
+          bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14)_1px,transparent_2px)]
           bg-size-[45px_45px]
         "
       />
 
       {/* ⭐ Optical Core Source (Top Left Near Brand) */}
-      {/* <div
+      <div
         className="
           absolute
           w-[1400px]
           h-[1400px]
 
           -top-[900px]
-          -left-[100px]
+          -left-[500px]
 
-          bg-[radial-gradient(circle,_rgba(240,240,255,0.2)_0%,_transparent_65%)]
+          bg-[radial-gradient(circle,_rgba(240,240,255,0.3)_30%,_transparent_65%)]
           opacity-10
         "
-      /> */}
+      />
 
       {/* Blue Optical Streak From Source */}
-      {/* <div
+      <div
         className="
           absolute
           top-[18%]
@@ -44,7 +44,7 @@ export default function Background() {
           blur-sm
           opacity-80
         "
-      /> */}
+      />
 
       {/* Orange Reflection Artifact */}
       <div

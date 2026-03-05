@@ -2,7 +2,6 @@ import Layout from "../components/Layout";
 import PageContentTransition from "../components/PageContentTransition";
 import Typewriter from "../components/Typewriter";
 
-
 const Home = () => {
   return (
     <Layout>
@@ -36,7 +35,7 @@ const Home = () => {
               <span className="bg-linear-to-r from-blue-300 via-blue-300/90 to-blue-300/80 bg-clip-text text-transparent">
                 &lt;
               </span>
-
+              
               <Typewriter text="Khi Kidman" speed={90} />
 
               <span className="bg-linear-to-r from-blue-300/80 via-blue-300/70 to-blue-300/60 bg-clip-text text-transparent">
@@ -69,7 +68,7 @@ const Home = () => {
                 rounded-full
                 hover:shadow-[0_0_0px_rgba(59,130,246,0.0)]
                 hover:bg-blue-300
-                transition
+                transition-all duration-300
               "
             >
               Contact Me
@@ -87,7 +86,8 @@ const Home = () => {
                 rounded-full
                 border-2 border-blue-300/60
                 hover:shadow-[0_0_0px_rgba(59,130,246,0.0)]
-                hover:bg-blue-300
+                hover:text-zinc-100
+                hover:border-blue-300/70
                 transition-all duration-300
               "
             >
@@ -176,6 +176,87 @@ const Home = () => {
           </div>
         </div>
       </PageContentTransition>
+      
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 -translate-y-15">
+
+  <div
+    className="
+      opacity-0
+      animate-fade-in-arrow
+      text-blue-300
+      animate-arrow
+    "
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-8 h-8 drop-shadow-[0_0_12px_rgba(59,130,246,0.6)]"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+  </div>
+
+</div>
+{/* ===== Skills Marquee ===== */}
+<div className="relative w-full py-24 overflow-hidden">
+
+  {/* Background Ambient Glow Shadow */}
+  <div className="
+    absolute inset-0
+    pointer-events-none
+    bg-gradient-radial from-blue-500/10 via-transparent to-transparent
+    blur-3xl
+  "/>
+
+  <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto relative z-10">
+
+    {[
+      "Python",
+      "C#",
+      "C++",
+      "Swift",
+      "x86",
+      "JavaScript",
+      "React",
+      "Tailwind",
+      "HTML5",
+      "x86",
+      "ARM",
+      "KiCad",
+      "Firmware",
+      "Embedded Systems"
+    ].map((skill, i) => (
+      <div
+        key={i}
+        className="
+          px-5 py-2
+          rounded-full
+          border border-zinc-800
+          text-zinc-400
+          bg-white/5
+          backdrop-blur-md
+          shadow-[0_0_40px_rgba(59,130,246,0.08)]
+          hover:bg-white/10
+          transition-all duration-300
+          animate-float
+        "
+        style={{
+          animationDelay: `${i * 0.4}s`
+        }}
+      >
+        {skill}
+      </div>
+    ))}
+
+  </div>
+</div>
     </Layout>
   );
 };
