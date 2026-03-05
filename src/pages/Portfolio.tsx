@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import { useState, useEffect } from "react";
 // import { AnimatePresence, motion } from "framer-motion";
 import PortfolioModal from "../components/PortfolioModal";
+import { type PortfolioSystem } from "../types/portfolio";
 
 // const oldsystems = [
 //   {
@@ -33,17 +34,6 @@ import PortfolioModal from "../components/PortfolioModal";
 //     tech: ["React", "Node", "TypeScript", "REST APIs"]
 //   }
 // ];
-
-interface PortfolioSystem {
-  title: string;
-  context: string;
-  description?: string;
-  overview?: string;
-  architecture?: string;
-  contributions?: string;
-  challenges?: string;
-  tech: string[];
-}
 
 const systems: PortfolioSystem[] = [
 {
@@ -165,7 +155,7 @@ const Portfolio = () => {
                 </div>
 
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  {system.description}
+                  {system.overview}
                 </p>
               </div>
 

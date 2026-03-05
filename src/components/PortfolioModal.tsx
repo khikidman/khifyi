@@ -1,17 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-
-type PortfolioSystem = {
-  title: string;
-  context: string;
-
-  overview: string;
-  architecture?: string;
-  contributions?: string;
-  challenges?: string;
-
-  tech: string[];
-};
+import { type PortfolioSystem } from "../types/portfolio";
 
 type Props = {
   system: PortfolioSystem | null;
@@ -81,7 +70,7 @@ export default function PortfolioModal({ system, onClose }: Props) {
             absolute top-6 right-6
             w-12 h-12
             flex items-center justify-center
-            text-zinc-400 text-2xl
+            text-zinc-400 text-4xl
             rounded-full
             hover:bg-white/10
             hover:text-white
@@ -101,52 +90,92 @@ export default function PortfolioModal({ system, onClose }: Props) {
           {system.context}
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-6 border-b border-zinc-800 mb-8">
+        <div className="flex gap-10">
 
-          {tabs.map(tab => {
+  {/* Sidebar Navigation */}
+  <div className="w-44 flex flex-col">
 
-            if (!(system as any)[tab.key]) return null;
+  {tabs.map((tab) => {
 
-            const active = activeTab === tab.key;
+    if (!(system as any)[tab.key]) return null;
 
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`
-                  pb-3 text-sm transition
+    const active = activeTab === tab.key;
 
-                  ${active
-                    ? "text-blue-300 border-b-2 border-blue-300"
-                    : "text-zinc-400 hover:text-white"}
-                `}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
+    return (
+      <button
+        key={tab.key}
+        onClick={() => setActiveTab(tab.key)}
+        className="
+          relative
+          py-2
+          text-sm
+          text-left
+          text-zinc-400
+          hover:text-white
+          transition-colors
+          cursor-pointer
+        "
+      >
 
-        </div>
+        {/* Animated dash */}
+        {active && (
+          <motion.span
+            layoutId="sectionIndicator"
+            className="
+              absolute
+              left-0
+              top-1/2
+              -translate-y-1/2
+              h-[2px]
+              w-8
+              bg-blue-300
+              rounded-full
+            "
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30
+            }}
+          />
+        )}
+
+        {/* Animated text shift */}
+        <motion.span
+          animate={{ paddingLeft: active ? 40 : 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 35
+          }}
+          className={active ? "text-blue-300 font-semibold" : ""}
+        >
+          {tab.label}
+        </motion.span>
+
+      </button>
+    );
+  })}
+
+</div>
+
+  {/* Content Area */}
+  <div className="flex-1 max-h-[50vh] overflow-y-auto pr-2">
 
         {/* Content */}
         <motion.div
           key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.18 }}
         >
           <p className="text-zinc-400 leading-relaxed mb-8">
             {content}
           </p>
         </motion.div>
-
+      </div>
+      </div>
         {/* Tech */}
-        <h3 className="text-lg font-semibold mb-4 text-white">
-          Technologies
-        </h3>
-
-        <div className="flex flex-wrap gap-2">
+        <div className="mt-12 flex flex-wrap justify-center gap-2">
           {system.tech.map(tech => (
             <span
               key={tech}

@@ -1,8 +1,70 @@
 import Layout from "../components/Layout";
 import PageContentTransition from "../components/PageContentTransition";
 import Typewriter from "../components/Typewriter";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 const Home = () => {
+  const homeSections = [
+    { key: "about", label: "About Me" },
+    { key: "experience", label: "Experience" },
+    { key: "projects", label: "Projects" },
+    { key: "contact", label: "Contact" }
+  ];
+
+  const [activeSection, setActiveSection] = useState("about");
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!name || !email || !message) {
+      setError("Please fill out all fields");
+      return;
+    }
+
+    try {
+
+      setLoading(true);
+
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error();
+      }
+
+      setSuccess(true);
+
+      setName("");
+      setEmail("");
+      setMessage("");
+
+      setTimeout(() => setSuccess(false), 3000);
+
+    } catch {
+      setError("Message failed to send");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Layout>
       <PageContentTransition>
@@ -13,13 +75,12 @@ const Home = () => {
             alt="Khi Kidman"
             className="
               absolute
-              -right-87.5
-              top-10/25
+              -right-65
+              top-11/25
               -translate-y-1/2
-              w-155
+              w-125
               opacity-0
               headshot-animate
-              grayscale
               contrast-110
               brightness-90
               pointer-events-none
@@ -176,89 +237,312 @@ const Home = () => {
           </div>
         </div>
       </PageContentTransition>
-      
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 -translate-y-15">
 
-  <div
-    className="
-      opacity-0
-      animate-fade-in-arrow
-      text-blue-300
-      animate-arrow
-    "
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-8 h-8 drop-shadow-[0_0_12px_rgba(59,130,246,0.6)]"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19 9l-7 7-7-7"
-      />
-    </svg>
-  </div>
-
-</div>
-{/* ===== Skills Marquee ===== */}
-<div className="relative w-full py-24 overflow-hidden">
-
-  {/* Background Ambient Glow Shadow */}
-  <div className="
-    absolute inset-0
-    pointer-events-none
-    bg-gradient-radial from-blue-500/10 via-transparent to-transparent
-    blur-3xl
-  "/>
-
-  <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto relative z-10">
-
-    {[
-      "Python",
-      "C#",
-      "C++",
-      "Swift",
-      "x86",
-      "JavaScript",
-      "React",
-      "Tailwind",
-      "HTML5",
-      "x86",
-      "ARM",
-      "KiCad",
-      "Firmware",
-      "Embedded Systems"
-    ].map((skill, i) => (
-      <div
-        key={i}
-        className="
-          px-5 py-2
-          rounded-full
-          border border-zinc-800
-          text-zinc-400
-          bg-white/5
-          backdrop-blur-md
-          shadow-[0_0_40px_rgba(59,130,246,0.08)]
-          hover:bg-white/10
-          transition-all duration-300
-          animate-float
-        "
-        style={{
-          animationDelay: `${i * 0.4}s`
-        }}
-      >
-        {skill}
+      <div className="w-full flex justify-center mt-0 mb-12">
+        <div
+          className="
+            opacity-0
+            animate-fade-in-arrow
+            text-blue-300
+            animate-arrow
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-8 h-8 drop-shadow-[0_0_12px_rgba(59,130,246,0.6)]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
       </div>
-    ))}
+      {/* ===== Skills Marquee ===== */}
+      <div className="relative w-full py-24 overflow-hidden">
 
-  </div>
-</div>
+        {/* Background Ambient Glow Shadow */}
+        <div className="
+          absolute inset-0
+          pointer-events-none
+          bg-gradient-radial from-blue-500/10 via-transparent to-transparent
+          blur-3xl
+        "/>
+
+        <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto relative z-10">
+
+          {[
+            "Python",
+            "C#",
+            "C++",
+            "Swift",
+            "x86",
+            "JavaScript",
+            "React",
+            "Tailwind",
+            "HTML5",
+            "x86",
+            "ARM",
+            "KiCad",
+            "Firmware",
+            "Embedded Systems"
+          ].map((skill, i) => (
+            <div
+              key={i}
+              className="
+                px-5 py-2
+                rounded-full
+                border border-zinc-800
+                text-zinc-400
+                bg-white/5
+                backdrop-blur-md
+                shadow-[0_0_40px_rgba(59,130,246,0.08)]
+                hover:bg-white/10
+                transition-all duration-300
+                animate-float
+              "
+              style={{
+                animationDelay: `${i * 0.4}s`
+              }}
+            >
+              {skill}
+            </div>
+          ))}
+
+        </div>
+      </div>
+      <div className="max-w-6xl mx-auto mt-20 mb-20">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-14">
+
+          {/* ===== Navigation Column ===== */}
+          <div className="flex flex-col gap-2">
+
+            {homeSections.map(section => {
+
+              const active = activeSection === section.key;
+
+              return (
+                <button
+                  key={section.key}
+                  onClick={() => setActiveSection(section.key)}
+                  className="
+                    relative
+                    flex items-center
+                    gap-4
+                    py-2 px-3
+                    rounded-lg
+                    text-sm
+                    text-zinc-400
+                    hover:text-white
+                    hover:bg-white/5
+                    transition-all
+                    cursor-pointer
+                  "
+                >
+
+                  {/* Animated Dash */}
+                  {active && (
+                    <motion.div
+                      layoutId="homeNavIndicator"
+                      className="w-5 h-[2px] bg-blue-300 rounded-full"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30
+                      }}
+                    />
+                  )}
+
+                  {/* Text Shift */}
+                  <motion.span
+                    animate={{ paddingLeft: active ? 6 : 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 35
+                    }}
+                    className={active ? "text-blue-300" : ""}
+                  >
+                    {section.label}
+                  </motion.span>
+
+                </button>
+              );
+            })}
+
+          </div>
+
+          {/* ===== Content Column ===== */}
+          <div className="md:col-span-2 text-lg text-zinc-400 leading-relaxed">
+
+            <AnimatePresence mode="wait">
+
+              <motion.div
+                key={activeSection}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.25 }}
+              >
+
+                {activeSection === "about" && (
+                  <p>
+                    I am an embedded-focused computer engineer building systems across firmware,
+                    hardware design, and high-performance software.
+                  </p>
+                )}
+
+                {activeSection === "experience" && (
+                  <p>
+                    Experience content goes here. Add internships, research, or projects.
+                  </p>
+                )}
+
+                {activeSection === "projects" && (
+                  <p>
+                    Project highlights and technical achievements can go here.
+                  </p>
+                )}
+
+                {activeSection === "contact" && (
+                  <p>
+                    Contact information and calls to action can go here.
+                  </p>
+                )}
+
+              </motion.div>
+
+            </AnimatePresence>
+
+          </div>
+
+        </div>
+      </div>
+      <div className="w-full py-32 mt-32 border-t border-zinc-900">
+
+        <div className="max-w-3xl mx-auto px-6">
+
+          <h2 className="text-4xl font-bold mb-14 tracking-tight text-center">
+            <span className="text-blue-300">&lt;</span>
+            Contact
+            <span className="text-blue-300">/&gt;</span>
+          </h2>
+
+          <motion.form
+            onSubmit={handleSubmit}
+            className="
+              p-10
+              rounded-3xl
+              border border-zinc-800
+              bg-white/5
+              backdrop-blur-xl
+              shadow-[0_0_80px_rgba(59,130,246,0.08)]
+              space-y-6
+            "
+          >
+
+            {/* Error Message */}
+            {error && (
+              <p className="text-red-400 text-sm">{error}</p>
+            )}
+
+            {/* Name */}
+            <input
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Name"
+              className="
+                w-full
+                px-5 py-3
+                rounded-xl
+                bg-black/40
+                border border-zinc-800
+                text-white
+                focus:border-blue-300
+                transition
+              "
+            />
+
+            {/* Email */}
+            <input
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Email"
+              type="email"
+              className="
+                w-full
+                px-5 py-3
+                rounded-xl
+                bg-black/40
+                border border-zinc-800
+                text-white
+                focus:border-blue-300
+                transition
+              "
+            />
+
+            {/* Message */}
+            <textarea
+              value={message}
+              onChange={e => setMessage(e.target.value)}
+              placeholder="Message"
+              rows={5}
+              className="
+                w-full
+                px-5 py-3
+                rounded-xl
+                bg-black/40
+                border border-zinc-800
+                text-white
+                focus:border-blue-300
+                transition
+              "
+            />
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="
+                w-full
+                py-4
+                rounded-full
+                font-semibold
+                bg-blue-300
+                text-black
+                shadow-[0_0_25px_rgba(59,130,246,0.5)]
+                hover:shadow-none
+                transition-all duration-300
+                flex items-center justify-center gap-3
+              "
+            >
+
+              {loading && (
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                  className="w-5 h-5 border-2 border-black border-t-transparent rounded-full"
+                />
+              )}
+
+              {success ? "✓ Message Sent!" : "Send Message"}
+
+            </button>
+
+          </motion.form>
+
+        </div>
+      </div>
     </Layout>
   );
 };
+
+
 
 export default Home;
