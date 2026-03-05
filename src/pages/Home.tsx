@@ -18,9 +18,9 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [loading] = useState(false);
+  const [success] = useState(false);
+  const [error] = useState("");
 
   const handleSubmit = async () => {
   const res = await fetch("/api/send-email", {
