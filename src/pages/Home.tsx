@@ -22,48 +22,23 @@ const Home = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+  const res = await fetch("/api/send-email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name,
+      email,
+      message
+    })
+  });
 
-    if (!name || !email || !message) {
-      setError("Please fill out all fields");
-      return;
-    }
-
-    try {
-
-      setLoading(true);
-
-      const res = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          message
-        })
-      });
-
-      if (!res.ok) {
-        throw new Error();
-      }
-
-      setSuccess(true);
-
-      setName("");
-      setEmail("");
-      setMessage("");
-
-      setTimeout(() => setSuccess(false), 3000);
-
-    } catch {
-      setError("Message failed to send");
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (!res.ok) {
+    throw new Error("Send failed");
+  }
+};
 
   return (
     <Layout>
