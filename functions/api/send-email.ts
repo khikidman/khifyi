@@ -7,8 +7,8 @@ export const onRequestPost = async (context: any) => {
     const resend = new Resend(context.env.RESEND_API_KEY);
 
     const response = await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>",
-      to: "your-email@example.com",
+      from: "Portfolio <contact@khi.fyi>",
+      to: "khi.kidman@gmail.com",
       subject: "New message from portfolio",
       html: `
         <p><strong>Name:</strong> ${data.name}</p>

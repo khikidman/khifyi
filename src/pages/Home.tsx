@@ -18,33 +18,47 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const [loading] = useState(false);
-  const [success] = useState(false);
-  const [error] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const sendEmail = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const res = await fetch("/api/send-email", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name,
-      email,
-      message
-    })
-  });
+    setLoading(true);
+    setError("");
+    setSuccess(false);
 
-  const data = await res.json();
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message
+        })
+      });
 
-  if (data.success) {
-    alert("Message sent!");
-  } else {
-    alert("Failed to send message.");
-  }
-};
+      if (!res.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setSuccess(true);
+
+      // Clear form
+      setName("");
+      setEmail("");
+      setMessage("");
+
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    }
+
+    setLoading(false);
+  };
 
   return (
     <Layout>
