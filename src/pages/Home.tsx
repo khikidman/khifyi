@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import PageContentTransition from "../components/PageContentTransition";
 import Typewriter from "../components/Typewriter";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const homeSections = [
@@ -14,6 +14,10 @@ const Home = () => {
 
   const [activeSection, setActiveSection] = useState("about");
 
+  const [showTopButton, setShowTopButton] = useState(false);
+
+  const [showResume, setShowResume] = useState(false);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -21,6 +25,15 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTopButton(window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,8 +138,12 @@ const Home = () => {
           <div className="flex flex-wrap items-center gap-8">
 
             {/* Contact Button */}
-            <a
-              href="mailto:your@email.com"
+            <button
+              onClick={() => {
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
               className="
                 px-6 py-3
                 bg-blue-300
@@ -134,17 +151,17 @@ const Home = () => {
                 text-black
                 font-semibold
                 rounded-full
-                hover:shadow-[0_0_0px_rgba(59,130,246,0.0)]
-                hover:bg-blue-300
+                hover:shadow-none
                 transition-all duration-300
+                cursor-pointer
               "
             >
               Contact Me
-            </a>
+            </button>
 
             {/* Resume */}
-            <a
-              href="mailto:your@email.com"
+            <button
+              onClick={() => setShowResume(true)}
               className="
                 px-6 py-3
                 bg-transparent
@@ -153,14 +170,14 @@ const Home = () => {
                 font-semibold
                 rounded-full
                 border-2 border-blue-300/60
-                hover:shadow-[0_0_0px_rgba(59,130,246,0.0)]
                 hover:text-zinc-100
                 hover:border-blue-300/70
                 transition-all duration-300
+                cursor-pointer
               "
             >
               Resume
-            </a>
+            </button>
 
             {/* Social Icons */}
             <div className="flex gap-5">
@@ -431,7 +448,14 @@ const Home = () => {
 
         </div>
       </div>
-      <div className="w-full py-32 mt-32 border-t border-zinc-900">
+      <motion.div
+        id="contact"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full pt-28 pb-8 mt-32 border-t border-zinc-900"
+      >
 
         <div className="max-w-3xl mx-auto px-6">
 
@@ -526,9 +550,11 @@ const Home = () => {
                 bg-blue-300
                 text-black
                 shadow-[0_0_25px_rgba(59,130,246,0.5)]
-                hover:shadow-none
+                hover:shadow-[0_0_35px_rgba(59,130,246,0.7)]
+                active:scale-95
                 transition-all duration-300
                 flex items-center justify-center gap-3
+                cursor-pointer
               "
             >
 
@@ -545,9 +571,95 @@ const Home = () => {
             </button>
 
           </motion.form>
-
         </div>
-      </div>
+        
+      </motion.div>
+      <AnimatePresence>
+        {showTopButton && (
+          <motion.button
+            onClick={() =>
+              window.scrollTo({ top: 0, behavior: "smooth" })
+            }
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="
+              text-3xl
+              font-medium
+              fixed bottom-5 right-5
+              w-14 h-14
+              rounded-full
+              bg-blue-300
+              text-black
+              shadow-[0_0_25px_rgba(59,130,246,0.6)]
+              flex items-center justify-center
+              z-100
+              cursor-pointer
+            "
+          >
+            ↑
+          </motion.button>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showResume && (
+          <>
+            {/* Background Overlay */}
+            <motion.div
+              className="fixed inset-0 bg-black/70 backdrop-blur-lg z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowResume(false)}
+            />
+
+            {/* Modal */}
+            <motion.div
+              className="
+                fixed
+                top-1/2 left-1/2
+                -translate-x-1/2 -translate-y-1/2
+                w-[90%] max-w-4xl
+                h-[85vh]
+                bg-zinc-950
+                border border-zinc-800
+                rounded-2xl
+                overflow-hidden
+                z-50
+              "
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.25 }}
+            >
+
+              {/* Close Button */}
+              <button
+                onClick={() => setShowResume(false)}
+                className="
+                  absolute top-5 right-5
+                  text-2xl text-zinc-400
+                  hover:text-white
+                  transition
+                  cursor-pointer
+                  z-50
+                "
+              >
+                ✕
+              </button>
+
+              {/* Resume PDF Viewer */}
+              <iframe
+                src="/resume.pdf"
+                className="w-full h-full"
+              />
+
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </Layout>
   );
 };

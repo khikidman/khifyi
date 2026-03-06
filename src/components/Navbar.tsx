@@ -37,7 +37,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <nav className="w-full border-b border-zinc-800 backdrop-blur-md">
+    <nav className="w-full border-b border-zinc-800 backdrop-blur-md sticky z-50">
       <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Brand */}
