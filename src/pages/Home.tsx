@@ -29,6 +29,18 @@ const Home = () => {
     setError("");
     setSuccess(false);
 
+    if (!name || !email || !message) {
+      setError("All fields are required");
+      setLoading(false);
+      return;
+    }
+
+    if (!email.includes("@")) {
+      setError("Invalid email address");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/send-email", {
         method: "POST",
@@ -466,6 +478,7 @@ const Home = () => {
 
             {/* Email */}
             <input
+              maxLength={100}
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="Email"
@@ -484,6 +497,7 @@ const Home = () => {
 
             {/* Message */}
             <textarea
+              maxLength={2000}
               value={message}
               onChange={e => setMessage(e.target.value)}
               placeholder="Message"
@@ -526,7 +540,13 @@ const Home = () => {
                 />
               )}
 
-              {success ? "✓ Message Sent!" : "Send Message"}
+              {loading ? "Sending..." : success ? "✓ Sent!" : "Send Message"}
+
+              {success && (
+                <p className="text-blue-400 text-center">
+                  ✓ Message sent successfully!
+                </p>
+              )}
 
             </button>
 
