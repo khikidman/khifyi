@@ -22,7 +22,9 @@ const Home = () => {
   const [success] = useState(false);
   const [error] = useState("");
 
-  const handleSubmit = async () => {
+  const sendEmail = async (e: React.FormEvent) => {
+  e.preventDefault();
+
   const res = await fetch("/api/send-email", {
     method: "POST",
     headers: {
@@ -35,8 +37,12 @@ const Home = () => {
     })
   });
 
-  if (!res.ok) {
-    throw new Error("Send failed");
+  const data = await res.json();
+
+  if (data.success) {
+    alert("Message sent!");
+  } else {
+    alert("Failed to send message.");
   }
 };
 
@@ -410,7 +416,7 @@ const Home = () => {
           </h2>
 
           <motion.form
-            onSubmit={handleSubmit}
+            onSubmit={sendEmail}
             className="
               p-10
               rounded-3xl
