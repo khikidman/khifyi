@@ -2,38 +2,34 @@ import { Resend } from "resend";
 
 export const onRequestPost = async (context: any) => {
   try {
-    const { name, email, message } = await context.request.json();
+    const data = await context.request.json();
 
     const resend = new Resend(context.env.RESEND_API_KEY);
 
-    const { data, error } = await resend.emails.send({
-      from: "Website <contact@yourdomain.com>",
-      to: ["your@email.com"],
-      subject: `Portfolio Contact from ${name}`,
-      replyTo: email,
-      text: `
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}
-`
+    const response = await resend.emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
+      to: "your-email@example.com",
+      subject: "New message from portfolio",
+      html: `
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Message:</strong> ${data.message}</p>
+      `
     });
 
-    if (error) {
-      return new Response(JSON.stringify(error), { status: 500 });
-    }
+    return new Response(JSON.stringify(response), {
+      headers: { "Content-Type": "application/json" }
+    });
+
+  } catch (err: any) {
+
+    console.error("EMAIL ERROR:", err);
 
     return new Response(
-      JSON.stringify({ success: true }),
-      {
-        headers: { "Content-Type": "application/json" }
-      }
-    );
-
-  } catch (err) {
-    return new Response(
-      JSON.stringify({ error: "Failed to send email" }),
+      JSON.stringify({
+        error: "Failed to send email",
+        details: err?.message
+      }),
       { status: 500 }
     );
   }
