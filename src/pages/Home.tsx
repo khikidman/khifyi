@@ -540,13 +540,7 @@ const Home = () => {
                 />
               )}
 
-              {loading ? "Sending..." : success ? "✓ Sent!" : "Send Message"}
-
-              {success && (
-                <p className="text-blue-400 text-center">
-                  ✓ Message sent successfully!
-                </p>
-              )}
+              {loading ? "Sending..." : success ? "✓ Message sent successfully!" : "Send Message"}
 
             </button>
 
