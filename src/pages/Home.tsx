@@ -2,14 +2,39 @@ import Layout from "../components/Layout";
 import PageContentTransition from "../components/PageContentTransition";
 import Typewriter from "../components/Typewriter";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Home = () => {
+
+  const experiences = [
+    {
+    title: "C-UASC Drone Engineering",
+    date: "Feb 2026 – Jun 2026",
+    text: "Developing software and electrical systems for an ML-driven pathfinding and payload delivery drone."
+  },
+  {
+    title: "Shopping Webscraper",
+    date: "Mar 2025",
+    text: "Python automation tool with Selenium and Discord alerts for monitoring product restocks, deployed on AWS."
+  },
+  {
+    title: "Lifestyle + Scheduling App",
+    date: "May 2025 – Current",
+    text: "Full-stack lifestyle planner with to-dos, habits, and shared schedules using Firebase and OpenAI."
+  },
+  {
+    title: "HarvardX – CS50",
+    date: "Sep 2022 – Dec 2022",
+    text: "Learned algorithms, data handling, and full-stack development through projects like a stock simulator, DNA ID program, and file recovery tool."
+  },
+  
+];
+
+const [experienceIndex, setExperienceIndex] = useState(0);
+
   const homeSections = [
     { key: "about", label: "About Me" },
-    { key: "experience", label: "Experience" },
-    { key: "projects", label: "Projects" },
-    { key: "contact", label: "Contact" }
+    { key: "experience", label: "Experience" }
   ];
 
   const [activeSection, setActiveSection] = useState("about");
@@ -26,12 +51,20 @@ const Home = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  const scrollTimeout = useRef<number | null>(null);
+
   useEffect(() => {
     const handleScroll = () => {
-      setShowTopButton(window.scrollY > 400);
+      if (scrollTimeout.current) return;
+
+      scrollTimeout.current = window.setTimeout(() => {
+        setShowTopButton(window.scrollY > 400);
+        scrollTimeout.current = null;
+      }, 80);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -86,11 +119,13 @@ const Home = () => {
   };
 
   return (
-    <Layout>
+    <Layout showUpcomingReleases={true}>
       <PageContentTransition>
         <div className="relative min-h-[70vh] flex flex-col justify-center mt-10 mr-0 pr-40">
           {/* ===== Background Headshot ===== */}
           <img
+            loading="lazy"
+            decoding="async"
             src="/images/headshot.png"
             alt="Khi Kidman"
             className="
@@ -107,6 +142,8 @@ const Home = () => {
               select-none
               hidden md:block
               mask-radial
+              transform-gpu
+              will-change-transform
             "
           />
 
@@ -128,12 +165,16 @@ const Home = () => {
           </div>
 
           {/* ===== Summary ===== */}
-          <p className="text-zinc-400 text-lg max-w2xl leading-relaxed mb-10">
+          {/* <p className="text-zinc-400 text-lg max-w2xl leading-relaxed mb-10">
             Embedded-focused computer engineer building systems across firmware,
             hardware, and software. I design reliable, performance-driven
             solutions that bridge microcontrollers and scalable applications.
-          </p>
-
+          </p> */}
+          <p className="text-zinc-400 text-lg max-w2xl leading-relaxed mb-10">
+          Building embedded systems and software that bring life to technology.
+           I design microcontroller interfaces, firmware and scalable
+           applications that make devices and software work in harmony.
+            </p>
           {/* ===== Contact + Socials ===== */}
           <div className="flex flex-wrap items-center gap-8">
 
@@ -195,6 +236,8 @@ const Home = () => {
                   hover:border-blue-300
                   hover:shadow-[0_0_15px_rgba(74,128,222,0.4)]
                   transition-all duration-300
+                  transform-gpu
+                  will-change-transform
                 "
               >
                 <svg
@@ -220,6 +263,8 @@ const Home = () => {
                   hover:border-blue-300
                   hover:shadow-[0_0_15px_rgba(74,128,222,0.4)]
                   transition-all duration-300
+                  transform-gpu
+                  will-change-transform
                 "
               >
                 <svg
@@ -245,6 +290,8 @@ const Home = () => {
                   hover:border-blue-300
                   hover:shadow-[0_0_15px_rgba(74,128,222,0.4)]
                   transition-all duration-300
+                  transform-gpu
+                  will-change-transform
                 "
               >
                 <svg
@@ -295,7 +342,7 @@ const Home = () => {
           absolute inset-0
           pointer-events-none
           bg-gradient-radial from-blue-500/10 via-transparent to-transparent
-          blur-3xl
+          blur-sm
         "/>
 
         <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto relative z-10">
@@ -305,16 +352,16 @@ const Home = () => {
             "C#",
             "C++",
             "Swift",
-            "x86",
             "JavaScript",
             "React",
             "Tailwind",
-            "HTML5",
             "x86",
             "ARM",
             "KiCad",
-            "Firmware",
-            "Embedded Systems"
+            "Embedded Systems",
+            "AWS",
+            "Machine Learning",
+            "Digital Signal Processing",
           ].map((skill, i) => (
             <div
               key={i}
@@ -324,12 +371,15 @@ const Home = () => {
                 border border-zinc-800
                 text-zinc-400
                 bg-white/5
-                backdrop-blur-md
+                
                 shadow-[0_0_40px_rgba(59,130,246,0.08)]
                 hover:bg-white/10
                 transition-all duration-300
                 animate-float
+                transform: translateZ(0);
+                transform-gpu
               "
+              // backdrop-blur-sm
               style={{
                 animationDelay: `${i * 0.4}s`
               }}
@@ -340,124 +390,113 @@ const Home = () => {
 
         </div>
       </div>
-      <div className="max-w-6xl mx-auto mt-20 mb-20">
+      <div className="max-w-6xl mx-auto mt-20 mb-20 pt-28 border-t border-zinc-900">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-14 h-[250px] items-center ">
+    
+    {/* ===== Navigation Column ===== */}
+    <div className="w-32 flex flex-col justify-center ">
+      {homeSections.map((section) => {
+        const active = activeSection === section.key;
+        return (
+          <button
+            key={section.key}
+            onClick={() => setActiveSection(section.key)}
+            className="relative py-2 text-md text-left text-zinc-400 hover:text-white transition-colors cursor-pointer"
+          >
+            {/* Animated dash */}
+            {active && (
+              <motion.span
+                layoutId="sectionIndicator"
+                className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] w-8 bg-blue-300 rounded-full"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <motion.span
+              animate={{ paddingLeft: active ? 40 : 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 35 }}
+              className={active ? "text-blue-300 font-semibold" : ""}
+            >
+              {section.label}
+            </motion.span>
+          </button>
+        );
+      })}
+    </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-14">
+    {/* ===== Content Column ===== */}
+    <div className="md:col-span-2 flex flex-col justify-center text-lg text-zinc-400 leading-relaxed">
+      <AnimatePresence mode="wait">
+        <motion.div
+          style={{ willChange: "transform, opacity" }}
+          key={activeSection}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -12 }}
+          transition={{ duration: 0.25 }}
+        >
+          {activeSection === "about" && (
+            <div className="text-center">
+              <span>
+                I am an embedded-focused computer engineer building systems across
+                hardware design + high-performance 
+              </span>
+              <span className="text-zinc-300/90 font-medium"> and </span>
+              <span>streamlined software. Want my </span>
+              <a className="text-blue-300 text-shadow-blue-400 text-shadow-xs cursor-pointer">
+                full story
+              </a>
+              <span>?</span>
+            </div>
+          )}
 
-          {/* ===== Navigation Column ===== */}
-          <div className="flex flex-col gap-2">
+          {activeSection === "experience" && (
+            <div className="flex flex-col items-center gap-4 text-center min-h-[250px]">
+              <div className="flex-1 flex flex-col justify-center">
+                <h3 className="text-lg font-semibold">
+                  {experiences[experienceIndex].title}
+                </h3>
+                <p className="text-sm opacity-70">
+                  {experiences[experienceIndex].date}
+                </p>
+                <p className="mt-2">{experiences[experienceIndex].text}</p>
+              </div>
+              {/* Navigation dots */}
+              <div className="flex gap-2 mt-4">
+                {experiences.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setExperienceIndex(i)}
+                    className={`w-3 h-3 rounded-full transition cursor-pointer ${
+                      i === experienceIndex
+                        ? "bg-blue-300 shadow-[0_0_15px_rgba(74,128,222,0.4)] scale-125"
+                        : "bg-gray-500 scale-90 hover:shadow-[0_0_15px_rgba(74,128,222,0.4)] hover:scale-110"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
-            {homeSections.map(section => {
+          {activeSection === "contact" && (
+            <p>Contact information and calls to action can go here.</p>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
 
-              const active = activeSection === section.key;
-
-              return (
-                <button
-                  key={section.key}
-                  onClick={() => setActiveSection(section.key)}
-                  className="
-                    relative
-                    flex items-center
-                    gap-4
-                    py-2 px-3
-                    rounded-lg
-                    text-sm
-                    text-zinc-400
-                    hover:text-white
-                    hover:bg-white/5
-                    transition-all
-                    cursor-pointer
-                  "
-                >
-
-                  {/* Animated Dash */}
-                  {active && (
-                    <motion.div
-                      layoutId="homeNavIndicator"
-                      className="w-5 h-[2px] bg-blue-300 rounded-full"
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30
-                      }}
-                    />
-                  )}
-
-                  {/* Text Shift */}
-                  <motion.span
-                    animate={{ paddingLeft: active ? 6 : 0 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 35
-                    }}
-                    className={active ? "text-blue-300" : ""}
-                  >
-                    {section.label}
-                  </motion.span>
-
-                </button>
-              );
-            })}
-
-          </div>
-
-          {/* ===== Content Column ===== */}
-          <div className="md:col-span-2 text-lg text-zinc-400 leading-relaxed">
-
-            <AnimatePresence mode="wait">
-
-              <motion.div
-                key={activeSection}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.25 }}
-              >
-
-                {activeSection === "about" && (
-                  <p>
-                    I am an embedded-focused computer engineer building systems across firmware,
-                    hardware design, and high-performance software.
-                  </p>
-                )}
-
-                {activeSection === "experience" && (
-                  <p>
-                    Experience content goes here. Add internships, research, or projects.
-                  </p>
-                )}
-
-                {activeSection === "projects" && (
-                  <p>
-                    Project highlights and technical achievements can go here.
-                  </p>
-                )}
-
-                {activeSection === "contact" && (
-                  <p>
-                    Contact information and calls to action can go here.
-                  </p>
-                )}
-
-              </motion.div>
-
-            </AnimatePresence>
-
-          </div>
-
-        </div>
-      </div>
+  </div>
+</div>
       <motion.div
+        style={{ willChange: "transform, opacity" }}
         id="contact"
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         className="w-full pt-28 pb-8 mt-32 border-t border-zinc-900"
       >
 
-        <div className="max-w-3xl mx-auto px-6">
+        <div className="max-w-3xl mx-auto px-6 box-border">
 
           <h2 className="text-4xl font-bold mb-14 tracking-tight text-center">
             <span className="text-blue-300">&lt;</span>
@@ -472,9 +511,11 @@ const Home = () => {
               rounded-3xl
               border border-zinc-800
               bg-white/5
-              backdrop-blur-xl
+              backdrop-blur-sm
               shadow-[0_0_80px_rgba(59,130,246,0.08)]
               space-y-6
+              transform-gpu
+              will-change-transform
             "
           >
 
@@ -606,17 +647,45 @@ const Home = () => {
       <AnimatePresence>
         {showResume && (
           <>
-            {/* Background Overlay */}
             <motion.div
-              className="fixed inset-0 bg-black/70 backdrop-blur-lg z-50"
+              style={{ willChange: "transform, opacity" }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 transform-gpu will-change-opacity"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowResume(false)}
             />
 
-            {/* Modal */}
+            <motion.button
+              onClick={() => setShowResume(false)}
+              className="
+                fixed
+                top-10
+                left-[calc(50%-12px)]
+                -translate-y-1/2
+
+                w-12 h-12
+                rounded-full
+                bg-zinc-900/80
+                border border-zinc-800
+                text-3xl
+                text-zinc-400
+                hover:text-white
+                hover:bg-zinc-800
+                transition-all duration-300
+                z-50
+                cursor-pointer
+              "
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+            >
+              ✕
+            </motion.button>
+
+
             <motion.div
+              style={{ willChange: "transform, opacity" }}
               className="
                 fixed
                 top-1/2 left-1/2
@@ -624,10 +693,13 @@ const Home = () => {
                 w-[90%] max-w-4xl
                 h-[85vh]
                 bg-zinc-950
-                border border-zinc-800
+                border-2 border-zinc-400/70
+                shadow-[0_0_15px_rgba(246,246,246,0.1)]
                 rounded-2xl
                 overflow-hidden
                 z-50
+                transform-gpu
+                will-change-transform
               "
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -635,22 +707,7 @@ const Home = () => {
               transition={{ duration: 0.25 }}
             >
 
-              {/* Close Button */}
-              <button
-                onClick={() => setShowResume(false)}
-                className="
-                  absolute top-5 right-5
-                  text-2xl text-zinc-400
-                  hover:text-white
-                  transition
-                  cursor-pointer
-                  z-50
-                "
-              >
-                ✕
-              </button>
-
-              {/* Resume PDF Viewer */}
+              
               <iframe
                 src="/resume.pdf"
                 className="w-full h-full"

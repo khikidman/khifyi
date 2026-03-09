@@ -18,7 +18,7 @@ const Blog = () => {
   return (
     <Layout>
         
-      <div className="mb-10">
+      <div className="mb-10 sticky z-50">
   <h1 className="text-5xl font-bold tracking-tight flex items-center gap-2">
     
     {/* Opening Bracket */}

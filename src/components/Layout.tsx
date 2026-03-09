@@ -1,12 +1,20 @@
 import type { ReactNode } from "react";
 import Navbar from "./Navbar";
 import Background from "./Background";
+import { Link } from "react-router-dom";
+import UpcomingReleasesCarousel from "./UpcomingReleaseCarousel";
+
+const upcomingReleases = [
+  { title: "Afloat", releaseDate: "Mar 12, 2026" },
+  { title: "Eirenity", releaseDate: "Mar 13, 2026" },
+];
 
 interface LayoutProps {
   children: ReactNode;
+  showUpcomingReleases?: boolean;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, showUpcomingReleases = false }: LayoutProps) => {
   return (
     <div className="min-h-screen text-zinc-100">
       <Background />
@@ -16,11 +24,13 @@ const Layout = ({ children }: LayoutProps) => {
         <div
           className="
             absolute top-0 left-0 w-full
-            h-64
+            h-48
             bg-gradient-to-b
-            from-black/90
-            via-black/40
+            from-black/85
             to-transparent
+            will-change-transform
+            will-change-opacity
+            transform-gpu
           "
         />
 
@@ -28,17 +38,22 @@ const Layout = ({ children }: LayoutProps) => {
         <div
           className="
             absolute bottom-0 left-0 w-full
-            h-64
+            h-48
             bg-gradient-to-t
-            from-black/90
-            via-black/40
+            from-black/85
             to-transparent
+            will-change-transform
+            will-change-opacity
+            transform-gpu
           "
         />
 
       </div>
       <Navbar/>
 
+      {showUpcomingReleases && (
+        <UpcomingReleasesCarousel releases={upcomingReleases} />
+      )}
 
       <main className="max-w-3xl mx-auto px-6 py-12">
           {children}
@@ -54,12 +69,12 @@ const Layout = ({ children }: LayoutProps) => {
 
           {/* Optional small footer links */}
           <div className="flex gap-6">
-            <a
-              href="#"
+            <Link
+              to="/privacy"
               className="hover:text-white transition-colors duration-300"
             >
               Privacy
-            </a>
+            </Link>
           </div>
 
         </div>

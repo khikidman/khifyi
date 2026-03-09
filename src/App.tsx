@@ -7,6 +7,7 @@ import Portfolio from "./pages/Portfolio";
 import Music from "./pages/Music";
 import Blog from "./pages/Blog";
 import BlogPost from "./blog/BlogPost";
+import Privacy from "./pages/Privacy"
 
 function AppRoutes() {
   const location = useLocation();
@@ -19,6 +20,7 @@ function AppRoutes() {
         <Route path="/music" element={<Music />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
     </AnimatePresence>
   );

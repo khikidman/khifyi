@@ -1,124 +1,135 @@
-import { useRef, useState, useEffect } from "react";
+import { FaSpotify, FaApple, FaAmazon } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 interface Props {
   title: string;
   description?: string;
   cover: string;
-  trackId: string;
+
+  spotify?: string;
+  apple?: string;
+  amazon?: string;
+
+  releaseDate?: string;
 }
 
 const MusicTrackCard = ({
   title,
   description,
   cover,
-  trackId
+  spotify,
+  apple,
+  amazon,
+  releaseDate
 }: Props) => {
+  const [timeLeft, setTimeLeft] = useState<string | null>(null);
 
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  // Simulated progress (since SoundCloud doesn't easily expose progress via iframe API)
+  // Countdown logic
   useEffect(() => {
-    if (!isPlaying) {
-      setProgress(0);
-      return;
-    }
+    if (!releaseDate) return;
 
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) return 0;
-        return prev + 0.5;
-      });
-    }, 200);
+    const releaseTime = new Date(releaseDate).getTime();
 
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const diff = releaseTime - now;
+
+      if (diff <= 0) {
+        setTimeLeft(null); // release is live
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [releaseDate]);
 
-  const togglePlay = () => {
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-
-    iframe.contentWindow?.postMessage(
-      JSON.stringify({
-        method: isPlaying ? "pause" : "play"
-      }),
-      "*"
-    );
-
-    setIsPlaying(!isPlaying);
-  };
+  const isReleased = !timeLeft;
 
   return (
     <div
       className="
-        relative
-        flex
-        items-center
-        gap-6
-        rounded-xl
-        bg-zinc-900/40
-        border border-zinc-800
-        hover:border-blue-500
-        transition-all duration-300
-        p-5
+        break-inside-avoid
+        mb-8
         group
+        relative
+        cursor-pointer
+        rounded-2xl
+        bg-gradient-to-b from-zinc-900/80 to-zinc-950
+        border-2 border-zinc-800
+        p-6
+        transition-all duration-500 ease-out
+        hover:-translate-y-1
+        hover:border-blue-300/80
+        hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]
+        backdrop-blur-xl
         overflow-hidden
+        flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6
       "
     >
-      {/* Hidden SoundCloud Player */}
-      <iframe
-        ref={iframeRef}
-        className="hidden"
-        src={`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${trackId}&auto_play=false&visual=true`}
-      />
+      {/* Light Reflection */}
+      <div className="
+        absolute inset-0
+        bg-gradient-to-tr
+        from-transparent
+        via-blue-400/5
+        to-transparent
+        opacity-0
+        group-hover:opacity-100
+        transition-opacity duration-700
+      " />
 
       {/* Cover */}
-      <div className="w-28 md:w-32 flex-shrink-0 rounded-lg overflow-hidden">
+      <div className="w-full md:w-32 flex-shrink-0 rounded-lg overflow-hidden">
         <img
           src={cover}
+          alt={title}
           className="w-full h-full object-cover aspect-square"
         />
       </div>
 
-      {/* Details */}
-      <div className="flex-1 min-w-0">
-        <h3 className="text-xl font-semibold truncate">
-          {title}
-        </h3>
+      {/* Info + Timer + Icons */}
+      <div className="flex-1 min-w-0 flex flex-col justify-between">
+        <div>
+          <h3 className="text-xl font-semibold text-white truncate">{title}</h3>
+          {description && (
+            <p className="text-sm text-zinc-400 mt-1">{description}</p>
+          )}
+        </div>
 
-        {description && (
-          <p className="text-sm text-zinc-500 mt-1 truncate">
-            {description}
-          </p>
-        )}
-      </div>
+        <div className="mt-4 flex items-center justify-between flex-wrap gap-2">
+          {/* Countdown Timer */}
+          {!isReleased && (
+            <div className="
+              inline-block
+              px-3 py-1
+              rounded-full
+              bg-blue-400/10
+              text-blue-300 text-xs font-medium
+              shadow-[0_0_10px_rgba(59,130,246,0.3)]
+              backdrop-blur-sm
+            ">
+              Releases in {timeLeft}
+            </div>
+          )}
 
-      {/* Play Button */}
-      <button
-        onClick={togglePlay}
-        className={`
-          w-14 h-14
-          rounded-full
-          flex items-center justify-center
-          text-xl font-bold
-          transition-all duration-300
-          shrink-0
-
-          ${isPlaying
-            ? "bg-blue-300 text-black shadow-[0_0_25px_rgba(147,197,253,0.6)]"
-            : "bg-blue-300/20 text-blue-300 hover:bg-blue-300/40"}
-        `}
-      >
-        {isPlaying ? "❚❚" : "▶"}
-      </button>
-
-      {/* Progress Bar */}
-      <div className="absolute bottom-0 left-0 w-full h-[3px] bg-zinc-800">
-        <div
-          className="h-full bg-blue-400 transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
+          {/* Platform Icons */}
+          {isReleased && (
+            <div className="flex items-center gap-4 text-xl">
+              {spotify && <a href={spotify} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-green-400 transition-colors"><FaSpotify /></a>}
+              {apple && <a href={apple} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors"><FaApple /></a>}
+              {amazon && <a href={amazon} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-blue-400 transition-colors"><FaAmazon /></a>}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

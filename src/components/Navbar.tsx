@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+
 const Navbar = () => {
   const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
@@ -13,7 +14,7 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Portfolio", path: "/portfolio" },
-    { name: "Blog", path: "/blog" },
+    // { name: "Blog", path: "/blog" },
     { name: "Music", path: "/music" }
   ];
 
@@ -37,7 +38,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <nav className="w-full border-b border-zinc-800 backdrop-blur-md sticky z-50">
+    <nav className="w-full border-b border-zinc-800 backdrop-blur-sm sticky z-50">
       <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Brand */}
@@ -74,7 +75,8 @@ const Navbar = () => {
         {isActive && (
           <motion.span
             layoutId="underline"
-            className="absolute left-0 bottom-0 h-0.5 w-full bg-blue-300"
+            style={{ willChange: "transform" }}
+            className="absolute left-0 bottom-0 h-0.5 w-full bg-blue-300 transform-gpu"
             transition={{
               type: "spring",
               stiffness: 500,
@@ -90,8 +92,8 @@ const Navbar = () => {
           <span
             className="absolute bottom-0 h-0.5 bg-blue-300 transition-transform duration-300 ease-out"
             style={{
-              width: underline.width,
-              transform: `translateX(${underline.x}px)`
+              transform: `translate3d(${underline.x}px,0,0)`,
+              width: underline.width
             }}
           />
         </div>
