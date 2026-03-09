@@ -1,5 +1,4 @@
 import Layout from "../components/Layout";
-import PageContentTransition from "../components/PageContentTransition";
 import { musicTracks } from "../data/musicTracks";
 import MusicTrackCard from "../components/MusicTrackCard";
 
