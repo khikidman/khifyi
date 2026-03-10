@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import PageContentTransition from "../components/PageContentTransition";
 import Typewriter from "../components/Typewriter";
@@ -442,9 +443,9 @@ const [experienceIndex, setExperienceIndex] = useState(0);
               </span>
               <span className="text-zinc-300/90 font-medium"> and </span>
               <span>streamlined software. Want my </span>
-              <a className="text-blue-300 text-shadow-blue-400 text-shadow-xs cursor-pointer">
+              <Link to="/full-story" className="text-blue-300 text-shadow-blue-400 text-shadow-xs cursor-pointer">
                 full story
-              </a>
+              </Link>
               <span>?</span>
             </div>
           )}
