@@ -18,7 +18,7 @@ export const musicTracks: MusicTrack[] = [
     description: "Ambient / Experimental",
     cover: "/images/afloat-cover.jpg",
 
-    spotify: "https://open.spotify.com/",
+    spotify: "https://open.spotify.com/track/2VknBDuzpWwtpqfrASOEql?si=3c8c665183d041a2",
     apple: "https://music.apple.com/",
     amazon: "https://music.amazon.com/",
 
