@@ -78,6 +78,7 @@ const MusicTrackCard = ({
       {/* Light Reflection */}
       <div className="
         absolute inset-0
+        pointer-events-none
         bg-gradient-to-tr
         from-transparent
         via-blue-400/5
