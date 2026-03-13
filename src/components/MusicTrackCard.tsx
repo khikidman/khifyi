@@ -52,7 +52,7 @@ const MusicTrackCard = ({
     return () => clearInterval(interval);
   }, [releaseDate]);
 
-  const isReleased = !timeLeft;
+  const isReleased = releaseDate ? new Date().getTime() >= new Date(releaseDate).getTime() : true;
 
   return (
     <div
