@@ -4,28 +4,40 @@ import { Link } from "react-router-dom";
 
 interface Release {
   title: string;
-  releaseDate: string; // ISO string or formatted date
+  releaseDate: string; // ISO string
 }
 
 interface Props {
   releases: Release[];
-  interval?: number; // ms between slides
+  interval?: number;
 }
 
 const UpcomingReleasesCarousel = ({ releases, interval = 4000 }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    if (!releases.length) return;
+
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % releases.length);
     }, interval);
+
     return () => clearInterval(timer);
   }, [releases.length, interval]);
 
   if (!releases.length) return null;
 
+  const release = releases[currentIndex];
+  const now = new Date();
+  const releaseDate = new Date(release.releaseDate);
+
+  const label = releaseDate > now ? "Upcoming Release" : "Recent Release";
+
   return (
-    <Link to={"/music"} className="absolute top-16 w-full mt-4 px-6 py-0 mb-0 flex justify-center overflow-hidden z-50">
+    <Link
+      to="/music"
+      className="absolute top-16 w-full mt-4 px-6 flex justify-center overflow-hidden z-50"
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -35,11 +47,11 @@ const UpcomingReleasesCarousel = ({ releases, interval = 4000 }: Props) => {
           transition={{ duration: 0.6 }}
           className="text-center text-2xs md:text-base text-blue-300"
         >
-          🎵 Upcoming Release:{" "}
-          <span className="text- font-semibold text-white">
-            {releases[currentIndex].title}
+          🎵 {label}:{" "}
+          <span className="font-semibold text-white">
+            {release.title}
           </span>{" "}
-          – {releases[currentIndex].releaseDate}
+          – {release.releaseDate}
         </motion.div>
       </AnimatePresence>
     </Link>

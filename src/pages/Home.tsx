@@ -392,7 +392,7 @@ const [experienceIndex, setExperienceIndex] = useState(0);
         </div>
       </div>
       <div className="max-w-6xl mx-auto mt-20 mb-20 pt-28 border-t border-zinc-900">
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-14 h-[250px] items-center ">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-14 h-[260px] items-center ">
     
     {/* ===== Navigation Column ===== */}
     <div className="w-32 flex flex-col justify-center ">
