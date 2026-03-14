@@ -30,7 +30,7 @@ export const musicTracks: MusicTrack[] = [
     description: "Guitar / Experimental",
     cover: "/images/eirenity-cover.jpg",
 
-    spotify: "https://open.spotify.com/",
+    spotify: "https://open.spotify.com/track/21DbGTefwGFln3OIfD6C0G?si=e3db41a28ffd47c8",
     apple: "https://music.apple.com/",
     amazon: "https://music.amazon.com/",
 
