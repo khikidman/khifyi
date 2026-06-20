@@ -13,6 +13,18 @@ const ArcPrivacy = () => {
         </p>
 
         <p>
+          For training risk and medical-disclaimer information, see the{" "}
+          <a href="/arc/safety" className="text-blue-500 underline">
+            Arc App Medical & Safety Notice
+          </a>
+          . For app license and usage terms, see the{" "}
+          <a href="/arc/terms" className="text-blue-500 underline">
+            Arc App Terms & EULA
+          </a>
+          .
+        </p>
+
+        <p>
           Arc collects and stores information needed to create accounts, save
           training data, sync data across devices, send reminders you enable,
           support imports and exports, and troubleshoot issues you choose to
@@ -134,14 +146,29 @@ const ArcPrivacy = () => {
         <h2 className="text-2xl font-semibold pt-8">Retention</h2>
 
         <p>
-          Arc keeps account, workout, program, training profile, and bug report
-          data while your account is active or as needed to provide the app.
+          Arc keeps account, workout, program, and training profile data while
+          your account is active or until you delete that data.
+        </p>
+
+        <p>
+          When you delete your account, Arc removes account data from the active
+          app database within 30 days unless a longer period is required for
+          security, fraud prevention, dispute resolution, or legal compliance.
+        </p>
+
+        <p>
+          Bug reports and optional diagnostic details may be retained for up to
+          24 months so Arc can investigate issues and improve reliability.
         </p>
 
         <p>
           Deleted account data may remain for a limited time in provider backups,
-          logs, or required records before being removed according to provider
-          retention practices.
+          logs, or required records for up to 90 days before being removed
+          according to provider retention practices.
+        </p>
+
+        <p>
+          During beta, Arc does not automatically delete inactive accounts.
         </p>
 
         <h2 className="text-2xl font-semibold pt-8">Children's Privacy</h2>
