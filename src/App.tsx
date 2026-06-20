@@ -11,6 +11,7 @@ import Privacy from "./pages/Privacy"
 import ArcPrivacy from "./pages/ArcPrivacy"
 import ArcSafety from "./pages/ArcSafety"
 import ArcTerms from "./pages/ArcTerms"
+import ArcSupport from "./pages/ArcSupport"
 import FullStoryPage from "./pages/FullStoryPage"
 
 function AppRoutes() {
@@ -30,6 +31,7 @@ function AppRoutes() {
         <Route path="/arc/eula" element={<Navigate to="/arc/terms" replace />} />
         <Route path="/arc/privacy" element={<ArcPrivacy />} />
         <Route path="/arc/safety" element={<ArcSafety />} />
+        <Route path="/arc/support" element={<ArcSupport />} />
         <Route path="/full-story" element={<FullStoryPage />} />
       </Routes>
     </AnimatePresence>
