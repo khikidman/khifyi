@@ -1,161 +1,186 @@
 import Layout from "../components/Layout";
 
-const policySections = [
-  {
-    title: "Information Arc Handles",
-    items: [
-      "Account information, including your Firebase user ID, email address, account creation date, premium status, and profile details provided by sign-in providers such as Google or Apple.",
-      "Training profile information, including display name, birth date, height, body weight, preferred units, sex, activity level, goals, schedule preferences, equipment access, limitations, disliked exercises, guidance preference, and baseline lifts.",
-      "Workout and program information, including workout titles, dates, exercises, sets, reps, weights, rest timers, set types, notes, cardio details, program plans, check-ins, and program adjustments.",
-      "Import and export information when you choose to import workout CSV files or export Arc workout data.",
-      "Optional bug report information, including report text, category, current screen, and diagnostics such as app version, build number, iOS version, device model, locale, and time zone when diagnostics are included.",
-      "Notification preferences and local notification identifiers used to remind you about active workouts and upcoming scheduled workouts."
-    ]
-  },
-  {
-    title: "How Arc Uses Information",
-    items: [
-      "To authenticate your account and keep your workout history, programs, settings, and training profile available across devices.",
-      "To power workout logging, program planning, record book history, progress charts, rest timers, reminders, imports, exports, and account controls.",
-      "To respond to bug reports, diagnose issues, protect app reliability, and improve the beta experience.",
-      "To provide local notifications you enable. Arc does not use workout reminders for advertising."
-    ]
-  },
-  {
-    title: "Storage and Sharing",
-    items: [
-      "Arc stores data locally on your device and, when you are signed in, syncs user data with Firebase services used by the app.",
-      "Firebase Authentication and Cloud Firestore support account login and data sync. Google and Apple are used only when you choose those sign-in methods.",
-      "Arc does not sell your personal information and does not display third-party ads.",
-      "Arc does not include nutrition tracking, camera food recognition, HealthKit import, or third-party analytics in the current beta build unless those features are added in a future version."
-    ]
-  },
-  {
-    title: "Your Controls",
-    items: [
-      "You can export Arc workout data from Settings.",
-      "You can clear the local cache on the current device from Settings.",
-      "You can delete workout history or delete your account from Settings. Account deletion removes Arc user data associated with your account from the app database.",
-      "You can disable notifications through Arc settings or iOS notification settings.",
-      "You can choose whether to include diagnostics when submitting a bug report."
-    ]
-  },
-  {
-    title: "Retention and Changes",
-    items: [
-      "Arc keeps account, workout, program, training profile, and bug report data while your account is active or as needed to provide the app.",
-      "Deleted account data may remain for a limited time in provider backups, logs, or required records before being removed according to provider retention practices.",
-      "If Arc changes what data it collects or how data is used, this policy will be updated before that version ships."
-    ]
-  }
-];
-
-const quickFacts = [
-  "No third-party ads",
-  "No sale of personal data",
-  "User-initiated export",
-  "In-app account deletion"
-];
-
 const ArcPrivacy = () => {
   return (
     <Layout>
-      <section className="space-y-14">
-        <header className="relative overflow-hidden rounded-3xl border border-blue-300/20 bg-zinc-950/60 p-8 shadow-[0_0_50px_rgba(147,197,253,0.08)]">
-          <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-blue-300/14 via-transparent to-transparent" />
-          <div className="relative space-y-5">
-            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-blue-300/90">
-              <span>Arc</span>
-              <span className="h-1 w-1 rounded-full bg-blue-300/60" />
-              <span>Privacy Policy</span>
-            </div>
+      <div className="max-w-3xl mx-auto px-6 py-12 space-y-6 text-sm leading-relaxed">
+        <h1 className="text-3xl font-bold">Arc App Privacy Policy</h1>
+        <p className="text-gray-500">Last updated: June 20, 2026</p>
 
-            <div className="space-y-3">
-              <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
-                Privacy for the Arc app
-              </h1>
-              <p className="max-w-2xl text-sm leading-7 text-zinc-400 md:text-base">
-                Arc is a workout and program tracking app. This policy explains
-                what the app handles, why it handles it, and the controls users
-                have over their training data.
-              </p>
-            </div>
+        <p>
+          This Privacy Policy describes how Arc handles information when you use
+          the Arc workout and program tracking app.
+        </p>
 
-            <div className="flex flex-wrap gap-2">
-              {quickFacts.map((fact) => (
-                <span
-                  key={fact}
-                  className="rounded-full border border-blue-300/20 bg-blue-300/10 px-3 py-1.5 text-xs font-medium text-blue-200"
-                >
-                  {fact}
-                </span>
-              ))}
-            </div>
+        <p>
+          Arc collects and stores information needed to create accounts, save
+          training data, sync data across devices, send reminders you enable,
+          support imports and exports, and troubleshoot issues you choose to
+          report.
+        </p>
 
-            <p className="text-xs text-zinc-500">Last updated: June 20, 2026</p>
-          </div>
-        </header>
+        <h2 className="text-2xl font-semibold pt-6">Information Arc Handles</h2>
 
-        <div className="space-y-8 text-sm leading-7 text-zinc-400">
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tight text-white">
-              Overview
-            </h2>
-            <p>
-              Arc collects the information needed to create accounts, save
-              training data, sync data across devices, send reminders users
-              enable, support imports and exports, and troubleshoot issues users
-              choose to report.
-            </p>
-          </section>
+        <p>Arc may handle the following categories of information:</p>
 
-          {policySections.map((section) => (
-            <section key={section.title} className="space-y-4">
-              <h2 className="text-2xl font-semibold tracking-tight text-white">
-                {section.title}
-              </h2>
-              <div className="space-y-3">
-                {section.items.map((item) => (
-                  <div
-                    key={item}
-                    className="group flex gap-3 rounded-2xl border border-zinc-800/80 bg-zinc-950/35 p-4 transition-colors duration-300 hover:border-blue-300/30"
-                  >
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-300/80 shadow-[0_0_14px_rgba(147,197,253,0.55)]" />
-                    <p>{item}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))}
+        <ul className="list-disc pl-6 space-y-2">
+          <li>
+            <strong>Account information</strong> - Firebase user ID, email
+            address, account creation date, premium status, and profile details
+            provided by sign-in providers such as Google or Apple.
+          </li>
+          <li>
+            <strong>Training profile information</strong> - display name, birth
+            date, height, body weight, preferred units, sex, activity level,
+            goals, schedule preferences, equipment access, limitations, disliked
+            exercises, guidance preference, and baseline lifts.
+          </li>
+          <li>
+            <strong>Workout and program information</strong> - workout titles,
+            workout dates, exercises, sets, reps, weights, rest timers, set
+            types, notes, cardio details, program plans, check-ins, and program
+            adjustments.
+          </li>
+          <li>
+            <strong>Import and export information</strong> - workout CSV files
+            you import and Arc workout exports you create.
+          </li>
+          <li>
+            <strong>Bug report information</strong> - report category, title,
+            message, current screen, status, generated summaries, and optional
+            diagnostics such as app version, build number, iOS version, device
+            model, locale, and time zone.
+          </li>
+          <li>
+            <strong>Notification information</strong> - local notification
+            preferences and identifiers used to remind you about active workouts
+            and upcoming scheduled workouts.
+          </li>
+        </ul>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tight text-white">
-              Children
-            </h2>
-            <p>
-              Arc is not intended for children under 16. If you believe a child
-              has provided personal information through Arc, please contact us so
-              the information can be reviewed and removed where appropriate.
-            </p>
-          </section>
+        <h2 className="text-2xl font-semibold pt-8">How Arc Uses Information</h2>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tight text-white">
-              Contact
-            </h2>
-            <p>
-              Questions about this policy can be sent to{" "}
-              <a
-                href="mailto:contact@khi.fyi"
-                className="font-semibold text-blue-300 underline decoration-blue-300/30 underline-offset-4 transition-colors hover:text-blue-200"
-              >
-                contact@khi.fyi
-              </a>
-              .
-            </p>
-          </section>
-        </div>
-      </section>
+        <p>Arc uses information for the following purposes:</p>
+
+        <ul className="list-disc pl-6 space-y-2">
+          <li>To authenticate accounts and provide account access.</li>
+          <li>
+            To save, display, and sync workouts, programs, training profiles,
+            settings, and progress history.
+          </li>
+          <li>
+            To power workout logging, program planning, record book history,
+            progress charts, rest timers, imports, exports, and account
+            controls.
+          </li>
+          <li>
+            To send local reminders for active workouts and upcoming scheduled
+            workouts when enabled.
+          </li>
+          <li>
+            To respond to bug reports, diagnose issues, protect app reliability,
+            and improve the beta experience.
+          </li>
+        </ul>
+
+        <p>Arc does not use workout reminders for advertising.</p>
+
+        <h2 className="text-2xl font-semibold pt-8">Storage and Sharing</h2>
+
+        <p>
+          Arc stores data locally on your device and, when you are signed in,
+          syncs user data with Firebase services used by the app.
+        </p>
+
+        <p>
+          Firebase Authentication and Cloud Firestore support account login and
+          data sync. Google and Apple are used only when you choose those sign-in
+          methods.
+        </p>
+
+        <p>
+          Arc does not sell personal information and does not display third-party
+          ads.
+        </p>
+
+        <p>
+          Arc does not include nutrition tracking, camera food recognition,
+          HealthKit import, or third-party analytics in the current beta build
+          unless those features are added in a future version. If those features
+          are added, this policy and App Store privacy disclosures should be
+          updated before release.
+        </p>
+
+        <h2 className="text-2xl font-semibold pt-8">Your Controls</h2>
+
+        <ul className="list-disc pl-6 space-y-2">
+          <li>You can export Arc workout data from Settings.</li>
+          <li>You can clear local cache on the current device from Settings.</li>
+          <li>You can delete workout history from Settings.</li>
+          <li>
+            You can delete your account from Settings. Account deletion removes
+            Arc user data associated with the account from the app database.
+          </li>
+          <li>
+            You can disable notifications through Arc settings or iOS
+            notification settings.
+          </li>
+          <li>
+            You can choose whether to include diagnostics when submitting a bug
+            report.
+          </li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold pt-8">Retention</h2>
+
+        <p>
+          Arc keeps account, workout, program, training profile, and bug report
+          data while your account is active or as needed to provide the app.
+        </p>
+
+        <p>
+          Deleted account data may remain for a limited time in provider backups,
+          logs, or required records before being removed according to provider
+          retention practices.
+        </p>
+
+        <h2 className="text-2xl font-semibold pt-8">Children's Privacy</h2>
+
+        <p>
+          Arc is not intended for children under the age of 16. We do not
+          knowingly collect personal information from children under 16.
+        </p>
+
+        <p>
+          If a parent or guardian believes that a child has provided personal
+          information through Arc, please contact us so the information can be
+          reviewed and removed where appropriate.
+        </p>
+
+        <h2 className="text-2xl font-semibold pt-8">Changes to this Policy</h2>
+
+        <p>
+          Arc may update this policy when app functionality, data collection,
+          storage, or sharing practices change. Updates will be posted on this
+          page with the revised "Last updated" date.
+        </p>
+
+        <h2 className="text-2xl font-semibold pt-8">Contact Us</h2>
+
+        <p>If you have any questions about this Privacy Policy, contact me:</p>
+
+        <ul className="list-disc pl-6">
+          <li>
+            Email:{" "}
+            <a
+              href="mailto:contact@khi.fyi"
+              className="text-blue-500 underline"
+            >
+              contact@khi.fyi
+            </a>
+          </li>
+        </ul>
+      </div>
     </Layout>
   );
 };
